@@ -18,4 +18,5 @@ pada file `main.rs`, _AMQP_ digunakan untuk menerima pesan dari sebuah antrian (
 `localhost:5672` merujuk pada tempat kode ini dijalankan,yaitu pada mesin lokal itu sendiri, yang mendengar pada port `5672`. 
 
 
-
+Setelah simulasi slow subscriber. dapat dilihat bahwa umlah total queue sebanyak 10. Angka tersebut menggambarkan jumlah pesan yang belum tersampaikan kepada aplikasi subscriber.
+![alt text](image.png)
