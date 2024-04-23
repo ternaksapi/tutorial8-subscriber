@@ -20,3 +20,12 @@ pada file `main.rs`, _AMQP_ digunakan untuk menerima pesan dari sebuah antrian (
 
 Setelah simulasi slow subscriber. dapat dilihat bahwa umlah total queue sebanyak 10. Angka tersebut menggambarkan jumlah pesan yang belum tersampaikan kepada aplikasi subscriber.
 ![alt text](image.png)
+
+Setelah membuat 3 terminal menjalankan subscriber, kemudian menjalankan publisher sebanyak 3 kali
+![alt text](image-1.png)
+
+Ketika menjalankan beberapa aplikasi subscriber (consumer) untuk satu antrian (queue) yang sama, jumlah pesan yang diterima oleh masing-masing subscriber akan lebih sedikit dibandingkan jika hanya ada satu subscriber saja. Ini karena RabbitMQ menggunakan strategi pembagian beban (load balancing) untuk mendistribusikan pesan antara subscriber yang tersedia.
+Secara default, RabbitMQ menggunakan strategi round-robin untuk mendistribusikan pesan ke subscriber yang terhubung ke antrian yang sama. Ini berarti jika ada tiga subscriber terhubung ke antrian "user_created", maka setiap subscriber akan menerima sepertiga dari total pesan yang dikirimkan ke antrian tersebut.
+Misalnya, jika publisher mengirimkan 15 pesan ke antrian "user_created" dan ada tiga subscriber yang terhubung, maka masing-masing subscriber akan menerima sekitar 5 pesan (asumsi pembagian merata).
+Namun, jika hanya ada satu subscriber yang terhubung ke antrian, maka subscriber tersebut akan menerima semua pesan yang dikirimkan ke antrian.
+Strategi pembagian beban ini dimaksudkan untuk membagi beban kerja antar subscriber dan meningkatkan throughput keseluruhan sistem. Dengan lebih banyak subscriber, setiap subscriber hanya perlu memproses sebagian dari pesan total, sehingga dapat mengurangi kemacetan dan meningkatkan kinerja sistem secara keseluruhan.
